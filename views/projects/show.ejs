@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project Details</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            padding: 30px;
+        }
+
+        .details-container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .details-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .details-card h1 {
+            color: #222;
+        }
+
+        .description {
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .budget {
+            font-size: 26px;
+            color: green;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .skill {
+            background: #e8f0ff;
+            color: #2457a6;
+            padding: 8px 14px;
+            border-radius: 20px;
+        }
+
+        .info {
+            margin: 15px 0;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .application-section {
+            margin-top: 25px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .application-section textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            resize: vertical;
+        }
+
+        .application-section button,
+        .application-section a {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .application-section button:hover,
+        .application-section a:hover {
+            background: #1d4ed8;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="details-container">
+
+        <a href="/projects" class="back-link">
+            ← Back to Projects
+        </a>
+
+        <div class="details-card">
+
+            <h1><%= project.title %></h1>
+
+            <p class="description">
+                <%= project.description %>
+            </p>
+
+            <div class="budget">
+                Budget: ₹<%= project.budget %>
+            </div>
+
+            <h3>Required Skills</h3>
+
+            <div class="skills">
+                <% project.skills.forEach(skill => { %>
+                    <span class="skill"><%= skill %></span>
+                <% }) %>
+            </div>
+
+            <div class="info">
+                <strong>Deadline:</strong>
+                <%= new Date(project.deadline).toLocaleDateString("en-IN") %>
+            </div>
+
+            <div class="info">
+                <strong>Posted By:</strong>
+                <%= project.postedBy ? project.postedBy.username : "Unknown User" %>
+            </div>
+
+            <div class="info">
+                <strong>Contact Email:</strong>
+                <%= project.postedBy ? project.postedBy.email : "Not available" %>
+            </div>
+
+        </div>
+
+        <div class="application-section">
+
+            <h2>Apply for this Project</h2>
+
+            <form action="/projects/<%= project._id %>/apply" method="POST">
+
+                <label for="proposal">Your Proposal:</label>
+
+                <textarea
+                    id="proposal"
+                    name="proposal"
+                    placeholder="Explain why you are suitable for this project..."
+                    required
+                    rows="5"
+                ></textarea>
+
+                <button type="submit">Submit Application</button>
+
+            </form>
+
+            <hr style="margin: 25px 0;">
+
+            <a href="/projects/<%= project._id %>/applications">
+                View Applications
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
